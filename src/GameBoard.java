@@ -21,8 +21,11 @@ public class GameBoard {
 
         Melee m2 = new Melee(1,2,0);
         m.tile = gameTiles[2][0];
-        gameTiles[2][0].setThing(m);
+        gameTiles[2][0].setThing(m2);
 
+        Melee m3 = new Melee(1,4,2);
+        m.tile = gameTiles[4][2];
+        gameTiles[4][2].setThing(m3);
 
         drawTiles();
 
@@ -30,7 +33,6 @@ public class GameBoard {
         for (int i = 0; i < p.length; i++) {
             gameTiles[p[i].getxCoordinate()][p[i].getyCoordinate()].isTarget = true;
         }
-
 
         drawTiles();
         //=============================================================================
