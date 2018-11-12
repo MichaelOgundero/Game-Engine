@@ -10,9 +10,9 @@ public class GameController {
     private static int rangedNumberOfMoves = 2;
     private static int meleeNumberOfMoves = 4;
     private static int cavalryNumberOfMoves = 6;
-    private static ArrayList<String> players = new ArrayList<>();
-    private static ArrayList<Base> bases = new ArrayList<>();
-    private static ArrayList<Unit> units = new ArrayList<>();
+    private static ArrayList<String> players = new ArrayList();
+    private static ArrayList<Base> bases = new ArrayList();
+    private static ArrayList<Unit> units = new ArrayList();
 
     public static void main(String[] args) {
         players.add("Jenna");

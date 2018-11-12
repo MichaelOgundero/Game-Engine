@@ -24,7 +24,7 @@ public class Unit extends Thing {
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
 
-        ArrayList<Position> positions = new ArrayList<>();
+        ArrayList<Position> positions = new ArrayList();
 
         //UPPER LEFT
         if (this.xCoordinate == 0 && this.yCoordinate == 0) {

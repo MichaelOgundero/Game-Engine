@@ -23,7 +23,7 @@ public class Ranged extends Unit {
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
 
-        ArrayList<Position> positions = new ArrayList<>();
+        ArrayList<Position> positions = new ArrayList();
 
         //UPPER LEFT
         if (this.xCoordinate == 0 && this.yCoordinate == 0) {
@@ -102,7 +102,7 @@ public class Ranged extends Unit {
         }
 
         //Delete Duplicates
-        Set<Position> posSet = new HashSet<>();
+        Set<Position> posSet = new HashSet();
         posSet.addAll(positions);
         positions.clear();
         positions.addAll(posSet);
