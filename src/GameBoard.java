@@ -6,6 +6,7 @@ public class GameBoard {
     private final double obstaclePercentage = 0.2;
 
     public static Tile[][] gameTiles = new Tile[BOARD_WIDTH][BOARD_HEIGHT];
+    public static TileTypeEnum[][] tilesTypes = new TileTypeEnum[BOARD_WIDTH][BOARD_HEIGHT];
 
     public GameBoard(int seed) {
         generateTiles(seed);
@@ -46,16 +47,20 @@ public class GameBoard {
         return BOARD_HEIGHT;
     }
 
+    public static TileTypeEnum[][] getTileTypes() {
+        return tilesTypes;
+    }
+
     public void generateTiles(int seed){
         Random generator = new Random(seed);
         for (int i = 0; i < BOARD_HEIGHT; i++) {
             for (int j = 0; j < BOARD_WIDTH; j++) {
                 if(generator.nextDouble() <= obstaclePercentage){
                     gameTiles[j][i] = new Ground();
-
                 }else{
                     gameTiles[j][i] = new Ground();
                 }
+                tilesTypes[j][i] = gameTiles[j][i].type;
             }
         }
     }

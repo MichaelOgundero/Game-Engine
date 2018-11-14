@@ -29,11 +29,16 @@ public class GameController {
         GameController.seed = seed;
         currentPlayer = GameController.players.get(0);
         GameBoard game = new GameBoard(seed);
-        while (gameActive == true) {
-            while (endTurn == false) {
 
-            }
-        }
+        getState();
+
+//=================GAME LOOP==================================================
+
+//        while (gameActive == true) {
+//            while (endTurn == false) {
+//
+//            }
+//        }
     }
 
     public static void forfeit(String username) {
@@ -142,6 +147,14 @@ public class GameController {
     }
 
     public static void getState(){
+        GameState state = new GameState(players.toArray(new String[0]),bases.toArray(new Base[0]), units.toArray(new Unit[0]), GameBoard.getTileTypes());
+        state.setBoardHeight(GameBoard.getBoardHeight());
+        state.setBoardWidth(GameBoard.getBoardWidth());
+        state.setCurrentPlayer(currentPlayer);
+
         Gson gson = new Gson();
+        String json = gson.toJson(state);
+
+        System.out.println(json);
     }
 }

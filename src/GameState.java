@@ -8,9 +8,22 @@ public class GameState {
     private Unit[] units;
     private TileTypeEnum[][] gameTiles;
 
-    public GameState(String[] players, Base[] bases, Unit[] units) {
+    public GameState(String[] players, Base[] bases, Unit[] units, TileTypeEnum[][] tiles) {
         this.players = players;
         this.bases = bases;
         this.units = units;
+        this.gameTiles = tiles;
+    }
+
+    public void setBoardHeight(int BOARD_HEIGHT) {
+        this.BOARD_HEIGHT = BOARD_HEIGHT;
+    }
+
+    public void setBoardWidth(int BOARD_WIDTH) {
+        this.BOARD_WIDTH = BOARD_WIDTH;
+    }
+
+    public void setCurrentPlayer(String currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }

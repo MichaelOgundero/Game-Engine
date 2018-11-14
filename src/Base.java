@@ -3,8 +3,6 @@ import java.util.ArrayList;
 public class Base extends Thing {
     private ArrayList<Unit> units;
     private int baseID;
-    private int xCoordinate;
-    private int yCoordinate;
     private int level;
     private int levelCap = 5;
 
