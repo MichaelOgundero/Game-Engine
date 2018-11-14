@@ -25,7 +25,7 @@ public class GameController {
         start(players.toArray(new String[0]),100);
     }
 
-    public static void start(String[] players, int seed) {
+    public static void start(String[] usernames, int seed) {
         GameController.seed = seed;
         currentPlayer = GameController.players.get(0);
         GameBoard game = new GameBoard(seed);
@@ -81,34 +81,34 @@ public class GameController {
 
     //================API FUNCTIONS=====================================================================
 
-    public static void upgrade(int baseID) {
+    public static void upgrade(int BaseID) {
         for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getBaseID() == baseID) {
+            if (bases.get(i).getBaseID() == BaseID) {
                 bases.get(i).upgrade();
             }
         }
     }
 
-    public static void create(int xCoordinate, int yCoordinate, UnitTypeEnum type, int baseID) {
+    public static void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID) {
         for (int i = 0; i < bases.size(); i++) {
             if (bases.get(i).getBaseID() == baseID) {
-                bases.get(i).createUnit(xCoordinate, yCoordinate, type);
+                bases.get(i).createUnit(xCoord, yCoord, type);
             }
         }
     }
 
-    public static void move(int xCoordinate, int yCoordinate, int unitID){
+    public static void move(int xCoord, int yCoord, int unitID){
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID) {
-                units.get(i).move(xCoordinate,yCoordinate);
+                units.get(i).move(xCoord,yCoord);
             }
         }
     }
 
-    public static void attack(int xCoordinate, int yCoordinate, int unitID){
+    public static void attack(int xCoord, int yCoord, int unitID){
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID) {
-                units.get(i).attack(xCoordinate,yCoordinate);
+                units.get(i).attack(xCoord,yCoord);
             }
         }
     }
@@ -146,7 +146,7 @@ public class GameController {
         return position;
     }
 
-    public static void getState(){
+    public static String getState(){
         GameState state = new GameState(players.toArray(new String[0]),bases.toArray(new Base[0]), units.toArray(new Unit[0]), GameBoard.getTileTypes());
         state.setBoardHeight(GameBoard.getBoardHeight());
         state.setBoardWidth(GameBoard.getBoardWidth());
@@ -156,5 +156,6 @@ public class GameController {
         String json = gson.toJson(state);
 
         System.out.println(json);
+        return json;
     }
 }
