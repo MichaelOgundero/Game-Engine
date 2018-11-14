@@ -6,6 +6,7 @@ public class GameState {
     private String[] players;
     private Base[] bases;
     private Unit[] units;
+    private TileTypeEnum[][] gameTiles;
 
     public GameState(String[] players, Base[] bases, Unit[] units) {
         this.players = players;

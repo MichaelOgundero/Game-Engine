@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public class GameController {
@@ -137,5 +139,9 @@ public class GameController {
             }
         }
         return position;
+    }
+
+    public static void getState(){
+        Gson gson = new Gson();
     }
 }
