@@ -41,15 +41,13 @@ public class GameController {
         currentPlayer = GameController.getInstance().players.get(0);
         GameBoard game = new GameBoard(seed);
 
-        getState();
-
 //=================GAME LOOP==================================================
 
-        while (gameActive == true) {
-            while (endTurn == false) {
-
-            }
-        }
+//        while (gameActive == true) {
+//            while (endTurn == false) {
+//
+//            }
+//        }
     }
 
     public void forfeit(String username) {
@@ -67,12 +65,12 @@ public class GameController {
         }
     }
 
-    public void toArrayList(String[] players) {
-        for (int i = 0; i < players.length; i++) {
-            GameController.getInstance().players.add(players[i]);
-        }
-        numberOfPlayers = GameController.getInstance().players.size();
-    }
+//    public void toArrayList(String[] players) {
+//        for (int i = 0; i < players.length; i++) {
+//            GameController.getInstance().players.add(players[i]);
+//        }
+//        numberOfPlayers = GameController.getInstance().players.size();
+//    }
 
     public int getRangedNumberOfMoves() {
         return rangedNumberOfMoves;
@@ -124,7 +122,7 @@ public class GameController {
         }
     }
 
-    public Position[] getMoves(int unitID) {
+    public String getMoves(int unitID) {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
@@ -132,10 +130,16 @@ public class GameController {
                 position = units.get(i).getMoves(true);
             }
         }
-        return position;
+
+        Positions positions = new Positions(position);
+        Gson gson = new Gson();
+        String json = gson.toJson(positions);
+
+        System.out.println(json);
+        return json;
     }
 
-    public Position[] getAttacks(int unitID) {
+    public String getAttacks(int unitID) {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
@@ -143,10 +147,16 @@ public class GameController {
                 position = units.get(i).getMoves(false);
             }
         }
-        return position;
+
+        Positions positions = new Positions(position);
+        Gson gson = new Gson();
+        String json = gson.toJson(positions);
+
+        System.out.println(json);
+        return json;
     }
 
-    public Position[] getPlacement(int baseID) {
+    public String getPlacement(int baseID) {
         Position[] position = null;
 
         for (int i = 0; i < bases.size(); i++) {
@@ -154,7 +164,13 @@ public class GameController {
                 position = bases.get(i).getPlacement();
             }
         }
-        return position;
+
+        Positions positions = new Positions(position);
+        Gson gson = new Gson();
+        String json = gson.toJson(positions);
+
+        System.out.println(json);
+        return json;
     }
 
     public String getState() {
