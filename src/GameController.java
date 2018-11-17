@@ -4,30 +4,33 @@ import java.util.ArrayList;
 
 public class GameController {
 
-    private static int seed;
-    private static int numberOfPlayers;
-    private static String currentPlayer;
-    private static boolean gameActive = true;
-    private static boolean endTurn = false;
-    private static int rangedNumberOfMoves = 2;
-    private static int meleeNumberOfMoves = 4;
-    private static int cavalryNumberOfMoves = 6;
-    private static ArrayList<String> players = new ArrayList();
-    private static ArrayList<Base> bases = new ArrayList();
-    private static ArrayList<Unit> units = new ArrayList();
+    private static GameController instance = null;
 
-    public static void main(String[] args) {
-        players.add("Jenna");
-        players.add("Spike");
-        players.add("Peter");
-        numberOfPlayers = players.size();
+    private int seed;
+    private int numberOfPlayers;
+    private String currentPlayer;
+    private boolean gameActive = true;
+    private boolean endTurn = false;
+    private int rangedNumberOfMoves = 2;
+    private int meleeNumberOfMoves = 4;
+    private int cavalryNumberOfMoves = 6;
+    private ArrayList<String> players = new ArrayList();
+    private ArrayList<Base> bases = new ArrayList();
+    private ArrayList<Unit> units = new ArrayList();
 
-        start(players.toArray(new String[0]),100);
+    public GameController() {
     }
 
-    public static void start(String[] usernames, int seed) {
-        GameController.seed = seed;
-        currentPlayer = GameController.players.get(0);
+    public static GameController getInstance() {
+        if (instance == null) {
+            instance = new GameController();
+        }
+        return instance;
+    }
+
+    public void start(String[] usernames, int seed) {
+        GameController.getInstance().seed = seed;
+        currentPlayer = GameController.getInstance().players.get(0);
         GameBoard game = new GameBoard(seed);
 
         getState();
@@ -41,12 +44,12 @@ public class GameController {
 //        }
     }
 
-    public static void forfeit(String username) {
+    public void forfeit(String username) {
         players.remove(username);
         numberOfPlayers--;
     }
 
-    public static void endTurn() {
+    public void endTurn() {
         endTurn = true;
         int currentPlayerPostion = players.indexOf(currentPlayer);
         if (currentPlayerPostion == numberOfPlayers - 1) {
@@ -56,32 +59,32 @@ public class GameController {
         }
     }
 
-    public static void toArrayList(String[] players) {
+    public void toArrayList(String[] players) {
         for (int i = 0; i < players.length; i++) {
-            GameController.players.add(players[i]);
+            GameController.getInstance().players.add(players[i]);
         }
-        numberOfPlayers = GameController.players.size();
+        numberOfPlayers = GameController.getInstance().players.size();
     }
 
-    public static int getRangedNumberOfMoves() {
+    public int getRangedNumberOfMoves() {
         return rangedNumberOfMoves;
     }
 
-    public static int getMeleeNumberOfMoves() {
+    public int getMeleeNumberOfMoves() {
         return meleeNumberOfMoves;
     }
 
-    public static int getCavalryNumberOfMoves() {
+    public int getCavalryNumberOfMoves() {
         return cavalryNumberOfMoves;
     }
 
-    public static void setGameActive(boolean gameActive) {
-        GameController.gameActive = gameActive;
+    public void setGameActive(boolean gameActive) {
+        GameController.getInstance().gameActive = gameActive;
     }
 
     //================API FUNCTIONS=====================================================================
 
-    public static void upgrade(int BaseID) {
+    public void upgrade(int BaseID) {
         for (int i = 0; i < bases.size(); i++) {
             if (bases.get(i).getBaseID() == BaseID) {
                 bases.get(i).upgrade();
@@ -89,7 +92,7 @@ public class GameController {
         }
     }
 
-    public static void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID) {
+    public void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID) {
         for (int i = 0; i < bases.size(); i++) {
             if (bases.get(i).getBaseID() == baseID) {
                 bases.get(i).createUnit(xCoord, yCoord, type);
@@ -97,23 +100,23 @@ public class GameController {
         }
     }
 
-    public static void move(int xCoord, int yCoord, int unitID){
+    public void move(int xCoord, int yCoord, int unitID) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID) {
-                units.get(i).move(xCoord,yCoord);
+                units.get(i).move(xCoord, yCoord);
             }
         }
     }
 
-    public static void attack(int xCoord, int yCoord, int unitID){
+    public void attack(int xCoord, int yCoord, int unitID) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID) {
-                units.get(i).attack(xCoord,yCoord);
+                units.get(i).attack(xCoord, yCoord);
             }
         }
     }
 
-    public static Position[] getMoves(int unitID){
+    public Position[] getMoves(int unitID) {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
@@ -124,7 +127,7 @@ public class GameController {
         return position;
     }
 
-    public static Position[] getAttacks(int unitID){
+    public Position[] getAttacks(int unitID) {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
@@ -135,7 +138,7 @@ public class GameController {
         return position;
     }
 
-    public static Position[] getPlacement(int baseID){
+    public Position[] getPlacement(int baseID) {
         Position[] position = null;
 
         for (int i = 0; i < bases.size(); i++) {
@@ -146,8 +149,8 @@ public class GameController {
         return position;
     }
 
-    public static String getState(){
-        GameState state = new GameState(players.toArray(new String[0]),bases.toArray(new Base[0]), units.toArray(new Unit[0]), GameBoard.getTileTypes());
+    public String getState() {
+        GameState state = new GameState(players.toArray(new String[0]), bases.toArray(new Base[0]), units.toArray(new Unit[0]), GameBoard.getTileTypes());
         state.setBoardHeight(GameBoard.getBoardHeight());
         state.setBoardWidth(GameBoard.getBoardWidth());
         state.setCurrentPlayer(currentPlayer);

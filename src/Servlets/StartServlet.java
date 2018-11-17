@@ -7,10 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "start", description = "start api call", urlPatterns = "/start")
-public class StartServlet extends HttpServlet{
+@WebServlet(name = "start", urlPatterns = "/start")
+public class StartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
     }
 }

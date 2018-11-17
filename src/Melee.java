@@ -5,7 +5,7 @@ public class Melee extends Unit {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.type = UnitTypeEnum.MELEE;
-        this.numberOfMovesRemaining = GameController.getMeleeNumberOfMoves();
+        this.numberOfMovesRemaining = GameController.getInstance().getMeleeNumberOfMoves();
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
     }
 

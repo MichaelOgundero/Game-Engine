@@ -5,7 +5,7 @@ public class Cavalry extends Unit {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.type = UnitTypeEnum.CAVALRY;
-        this.numberOfMovesRemaining = GameController.getCavalryNumberOfMoves();
+        this.numberOfMovesRemaining = GameController.getInstance().getCavalryNumberOfMoves();
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
     }
 
