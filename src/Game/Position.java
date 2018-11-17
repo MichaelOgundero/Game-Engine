@@ -1,3 +1,5 @@
+package Game;
+
 public class Position {
     private int xCoordinate;
     private int yCoordinate;

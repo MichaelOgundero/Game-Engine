@@ -1,3 +1,5 @@
+package Game;
+
 public class GameState {
     private int BOARD_HEIGHT;
     private int BOARD_WIDTH;

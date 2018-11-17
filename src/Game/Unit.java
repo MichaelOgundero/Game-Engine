@@ -1,25 +1,28 @@
+package Game;
+
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-public class Ranged extends Unit {
+public class Unit extends Thing {
+    protected int numberOfMovesRemaining;
+    protected int level;
+    protected int attackStrength;
+    protected int unitID;
+    protected UnitTypeEnum type;
 
-    public Ranged(int level, int xCoordinate, int yCoordinate) {
-        this.level = level;
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.type = UnitTypeEnum.RANGED;
-        this.numberOfMovesRemaining = GameController.getRangedNumberOfMoves();
+    public void move(int xCoordinate, int yCoordinate) {
+        GameBoard.gameTiles[this.xCoordinate][this.yCoordinate].setThing(null);
+        GameBoard.gameTiles[this.xCoordinate][this.yCoordinate].setHasThing(false);
+        GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(this);
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
+        numberOfMovesRemaining--;
     }
 
-    @Override
-    public void printThing() {
-        System.out.print(" R ");
+    public void attack(int xCoordinate, int yCoordinate) {
+        GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().setHealth(GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getHealth() - attackStrength);
     }
 
-    @Override
     public Position[] getMoves(boolean isMove) {
+
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
 
@@ -77,36 +80,23 @@ public class Ranged extends Unit {
             positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
         }
 
-        if (isMove == true) {
-            for (int i = 0; i < positions.size(); i++) {
-                int tileXCoordinate = positions.get(i).getxCoordinate();
-                int tileYCoordinate = positions.get(i).getyCoordinate();
-                if (GameBoard.gameTiles[tileXCoordinate][tileYCoordinate].hasThing == isMove) {
-                    positions.remove(i);
-                    i--;
-                }
+        for (int i = 0; i < positions.size(); i++) {
+            int tileXCoordinate = positions.get(i).getxCoordinate();
+            int tileYCoordinate = positions.get(i).getyCoordinate();
+            if (GameBoard.gameTiles[tileXCoordinate][tileYCoordinate].hasThing == isMove) {
+                positions.remove(i);
+                i--;
             }
         }
-
-        int neighborSize = positions.size();
-        for (int i = 0; i < neighborSize; i++) {
-            Unit temp = new Unit();
-            temp.xCoordinate = positions.get(i).getxCoordinate();
-            temp.yCoordinate = positions.get(i).getyCoordinate();
-
-            Position[] tempPosition = temp.getMoves(false);
-            for (int j = 0; j < tempPosition.length; j++) {
-                positions.add(tempPosition[j]);
-                System.out.println("dfadfdsafdsaf");
-            }
-        }
-
-        //Delete Duplicates
-        Set<Position> posSet = new HashSet();
-        posSet.addAll(positions);
-        positions.clear();
-        positions.addAll(posSet);
 
         return positions.toArray(new Position[0]);
+    }
+
+    public int getUnitID() {
+        return unitID;
+    }
+
+    public void increaseLevel() {
+        this.level++;
     }
 }

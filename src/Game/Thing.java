@@ -1,3 +1,5 @@
+package Game;
+
 public class Thing {
     protected Tile tile;
     protected int xCoordinate, yCoordinate;

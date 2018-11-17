@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import Game.GameController;
 
 @WebServlet(name = "start", urlPatterns = "/start")
 public class StartServlet extends HttpServlet {
@@ -13,5 +14,7 @@ public class StartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
+
+        
     }
 }

@@ -1,3 +1,5 @@
+package Game;
+
 public class Cavalry extends Unit {
 
     public Cavalry(int level, int xCoordinate, int yCoordinate) {

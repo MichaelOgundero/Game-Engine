@@ -1,3 +1,5 @@
+package Game;
+
 public class Tile {
     protected Thing thing;
     protected boolean hasThing;

@@ -1,3 +1,5 @@
+package Game;
+
 public class Melee extends Unit {
 
     public Melee(int level, int xCoordinate, int yCoordinate) {

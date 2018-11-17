@@ -1,3 +1,5 @@
+package Game;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -30,6 +32,12 @@ public class GameController {
 
     public void start(String[] usernames, int seed) {
         GameController.getInstance().seed = seed;
+        GameController.getInstance().numberOfPlayers = usernames.length;
+
+        for (int i = 0; i < usernames.length; i++) {
+            players.add(usernames[i]);
+        }
+
         currentPlayer = GameController.getInstance().players.get(0);
         GameBoard game = new GameBoard(seed);
 
@@ -37,11 +45,11 @@ public class GameController {
 
 //=================GAME LOOP==================================================
 
-//        while (gameActive == true) {
-//            while (endTurn == false) {
-//
-//            }
-//        }
+        while (gameActive == true) {
+            while (endTurn == false) {
+
+            }
+        }
     }
 
     public void forfeit(String username) {
