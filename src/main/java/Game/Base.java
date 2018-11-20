@@ -10,6 +10,10 @@ public class Base extends Thing {
 
     public Base(int xCoordinate, int yCoordinate) {
         this.level = 1;
+        units = new ArrayList<>();
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+        GameController.getInstance().addBase(this);
     }
 
     public void upgrade() {
@@ -100,16 +104,19 @@ public class Base extends Thing {
             Cavalry temp = new Cavalry(this.level, xCoordinate, yCoordinate);
             GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(temp);
             units.add(temp);
+            GameController.getInstance().addUnit(temp);
         }
         if (type == UnitTypeEnum.RANGED) {
             Ranged temp = new Ranged(this.level, xCoordinate, yCoordinate);
             GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(temp);
             units.add(temp);
+            GameController.getInstance().addUnit(temp);
         }
         if (type == UnitTypeEnum.MELEE) {
             Melee temp = new Melee(this.level, xCoordinate, yCoordinate);
             GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(temp);
             units.add(temp);
+            GameController.getInstance().addUnit(temp);
         }
     }
 }

@@ -65,6 +65,14 @@ public class GameController {
         }
     }
 
+    public void addBase(Base base){
+        bases.add(base);
+    }
+
+    public void addUnit(Unit unit){
+        units.add(unit);
+    }
+
 //    public void toArrayList(String[] players) {
 //        for (int i = 0; i < players.length; i++) {
 //            GameController.getInstance().players.add(players[i]);
@@ -174,6 +182,15 @@ public class GameController {
     }
 
     public String getState() {
+        //===========================================Servlet Test=======================================================
+        players.add("Peter");
+        players.add("Jenna");
+        players.add("Matt");
+
+
+        GameBoard game = new GameBoard(100);
+        //==============================================================================================================
+
         GameState state = new GameState(players.toArray(new String[0]), bases.toArray(new Base[0]), units.toArray(new Unit[0]), GameBoard.getTileTypes());
         state.setBoardHeight(GameBoard.getBoardHeight());
         state.setBoardWidth(GameBoard.getBoardWidth());
