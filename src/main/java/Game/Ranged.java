@@ -13,11 +13,9 @@ public class Ranged extends Unit {
         this.type = UnitTypeEnum.RANGED;
         this.numberOfMovesRemaining = GameController.getInstance().getRangedNumberOfMoves();
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
-    }
 
-    @Override
-    public void printThing() {
-        System.out.print(" R ");
+        this.unitID = counter;
+        counter++;
     }
 
     @Override
@@ -99,7 +97,6 @@ public class Ranged extends Unit {
             Position[] tempPosition = temp.getMoves(false);
             for (int j = 0; j < tempPosition.length; j++) {
                 positions.add(tempPosition[j]);
-                System.out.println("dfadfdsafdsaf");
             }
         }
 

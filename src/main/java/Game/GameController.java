@@ -11,14 +11,14 @@ public class GameController {
     private int seed;
     private int numberOfPlayers;
     private String currentPlayer;
-    private boolean gameActive = true;
-    private boolean endTurn = false;
+
     private int rangedNumberOfMoves = 2;
-    private int meleeNumberOfMoves = 4;
-    private int cavalryNumberOfMoves = 6;
-    private ArrayList<String> players = new ArrayList();
-    private ArrayList<Base> bases = new ArrayList();
-    private ArrayList<Unit> units = new ArrayList();
+    private int meleeNumberOfMoves = 3;
+    private int cavalryNumberOfMoves = 5;
+
+    public ArrayList<String> players = new ArrayList();
+    public ArrayList<Base> bases = new ArrayList();
+    public ArrayList<Unit> units = new ArrayList();
 
     public GameController() {
     }
@@ -41,13 +41,6 @@ public class GameController {
         currentPlayer = GameController.getInstance().players.get(0);
         GameBoard game = new GameBoard(seed);
 
-//=================GAME LOOP==================================================
-
-//        while (gameActive == true) {
-//            while (endTurn == false) {
-//
-//            }
-//        }
     }
 
     public void forfeit(String username) {
@@ -55,8 +48,7 @@ public class GameController {
         numberOfPlayers--;
     }
 
-    public void endTurn() {
-        endTurn = true;
+    public void endTurn(String username) {
         int currentPlayerPostion = players.indexOf(currentPlayer);
         if (currentPlayerPostion == numberOfPlayers - 1) {
             currentPlayer = players.get(0);
@@ -64,21 +56,6 @@ public class GameController {
             currentPlayer = players.get(currentPlayerPostion++);
         }
     }
-
-    public void addBase(Base base){
-        bases.add(base);
-    }
-
-    public void addUnit(Unit unit){
-        units.add(unit);
-    }
-
-//    public void toArrayList(String[] players) {
-//        for (int i = 0; i < players.length; i++) {
-//            GameController.getInstance().players.add(players[i]);
-//        }
-//        numberOfPlayers = GameController.getInstance().players.size();
-//    }
 
     public int getRangedNumberOfMoves() {
         return rangedNumberOfMoves;
@@ -90,10 +67,6 @@ public class GameController {
 
     public int getCavalryNumberOfMoves() {
         return cavalryNumberOfMoves;
-    }
-
-    public void setGameActive(boolean gameActive) {
-        GameController.getInstance().gameActive = gameActive;
     }
 
     //================API FUNCTIONS=====================================================================
@@ -182,15 +155,6 @@ public class GameController {
     }
 
     public String getState() {
-        //===========================================Servlet Test=======================================================
-        players.add("Peter");
-        players.add("Jenna");
-        players.add("Matt");
-
-
-        GameBoard game = new GameBoard(100);
-        //==============================================================================================================
-
         GameState state = new GameState(players.toArray(new String[0]), bases.toArray(new Base[0]), units.toArray(new Unit[0]), GameBoard.getTileTypes());
         state.setBoardHeight(GameBoard.getBoardHeight());
         state.setBoardWidth(GameBoard.getBoardWidth());

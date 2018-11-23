@@ -5,9 +5,10 @@ import java.util.ArrayList;
 public class Unit extends Thing {
     protected int numberOfMovesRemaining;
     protected int level;
-    protected int attackStrength;
+    protected transient int attackStrength;
     protected int unitID;
     protected UnitTypeEnum type;
+    protected static transient int counter;
 
     public void move(int xCoordinate, int yCoordinate) {
         GameBoard.gameTiles[this.xCoordinate][this.yCoordinate].setThing(null);

@@ -12,6 +12,4 @@ public class Thing {
     public int getHealth() {
         return health;
     }
-
-    public void printThing(){}
 }

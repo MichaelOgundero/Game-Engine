@@ -9,10 +9,8 @@ public class Melee extends Unit {
         this.type = UnitTypeEnum.MELEE;
         this.numberOfMovesRemaining = GameController.getInstance().getMeleeNumberOfMoves();
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
-    }
 
-    @Override
-    public void printThing() {
-        System.out.print(" M ");
+        this.unitID = counter;
+        counter++;
     }
 }

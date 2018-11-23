@@ -9,10 +9,8 @@ public class Cavalry extends Unit {
         this.type = UnitTypeEnum.CAVALRY;
         this.numberOfMovesRemaining = GameController.getInstance().getCavalryNumberOfMoves();
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
-    }
 
-    @Override
-    public void printThing() {
-        System.out.print(" C ");
+        this.unitID = counter;
+        counter++;
     }
 }
