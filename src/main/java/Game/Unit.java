@@ -15,6 +15,8 @@ public class Unit extends Thing {
         GameBoard.gameTiles[this.xCoordinate][this.yCoordinate].setHasThing(false);
         GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(this);
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
         numberOfMovesRemaining--;
     }
 
@@ -100,4 +102,6 @@ public class Unit extends Thing {
     public void increaseLevel() {
         this.level++;
     }
+
+    public void resetMoves(){}
 }

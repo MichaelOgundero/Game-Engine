@@ -17,7 +17,9 @@ public class EndTurnServlet extends HttpServlet{
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        GameController.getInstance().endTurn();
+        String username = req.getParameter("username");
+
+        GameController.getInstance().endTurn(username);
         String gameState = GameController.getInstance().getState();
 
         PrintWriter out = resp.getWriter();

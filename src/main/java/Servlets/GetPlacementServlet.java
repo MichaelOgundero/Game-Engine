@@ -18,9 +18,10 @@ public class GetPlacementServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String baseID = req.getParameter("baseID");
+        String username = req.getParameter("username");
         int baseIdAsInt = Integer.parseInt(baseID);
 
-        String positions = GameController.getInstance().getPlacement(baseIdAsInt);
+        String positions = GameController.getInstance().getPlacement(baseIdAsInt, username);
 
         PrintWriter out = resp.getWriter();
         out.print(positions);

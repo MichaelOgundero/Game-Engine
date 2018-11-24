@@ -5,23 +5,16 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class GameController {
-
     private static GameController instance = null;
 
-    private int seed;
     private int numberOfPlayers;
     private String currentPlayer;
-
-    private int rangedNumberOfMoves = 2;
-    private int meleeNumberOfMoves = 3;
-    private int cavalryNumberOfMoves = 5;
 
     public ArrayList<String> players = new ArrayList();
     public ArrayList<Base> bases = new ArrayList();
     public ArrayList<Unit> units = new ArrayList();
 
-    public GameController() {
-    }
+    public GameController() {}
 
     public static GameController getInstance() {
         if (instance == null) {
@@ -31,7 +24,6 @@ public class GameController {
     }
 
     public void start(String[] usernames, int seed) {
-        GameController.getInstance().seed = seed;
         GameController.getInstance().numberOfPlayers = usernames.length;
 
         for (int i = 0; i < usernames.length; i++) {
@@ -40,7 +32,6 @@ public class GameController {
 
         currentPlayer = GameController.getInstance().players.get(0);
         GameBoard game = new GameBoard(seed);
-
     }
 
     public void forfeit(String username) {
@@ -55,23 +46,14 @@ public class GameController {
         } else {
             currentPlayer = players.get(currentPlayerPostion++);
         }
-    }
-
-    public int getRangedNumberOfMoves() {
-        return rangedNumberOfMoves;
-    }
-
-    public int getMeleeNumberOfMoves() {
-        return meleeNumberOfMoves;
-    }
-
-    public int getCavalryNumberOfMoves() {
-        return cavalryNumberOfMoves;
+        for (int i = 0; i < units.size(); i++) {
+            units.get(i).resetMoves();
+        }
     }
 
     //================API FUNCTIONS=====================================================================
 
-    public void upgrade(int BaseID) {
+    public void upgrade(int BaseID, String username) {
         for (int i = 0; i < bases.size(); i++) {
             if (bases.get(i).getBaseID() == BaseID) {
                 bases.get(i).upgrade();
@@ -79,7 +61,7 @@ public class GameController {
         }
     }
 
-    public void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID) {
+    public void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID, String username) {
         for (int i = 0; i < bases.size(); i++) {
             if (bases.get(i).getBaseID() == baseID) {
                 bases.get(i).createUnit(xCoord, yCoord, type);
@@ -87,7 +69,7 @@ public class GameController {
         }
     }
 
-    public void move(int xCoord, int yCoord, int unitID) {
+    public void move(int xCoord, int yCoord, int unitID, String username) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID) {
                 units.get(i).move(xCoord, yCoord);
@@ -95,7 +77,7 @@ public class GameController {
         }
     }
 
-    public void attack(int xCoord, int yCoord, int unitID) {
+    public void attack(int xCoord, int yCoord, int unitID, String username) {
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID) {
                 units.get(i).attack(xCoord, yCoord);
@@ -103,7 +85,7 @@ public class GameController {
         }
     }
 
-    public String getMoves(int unitID) {
+    public String getMoves(int unitID, String username) {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
@@ -120,7 +102,7 @@ public class GameController {
         return json;
     }
 
-    public String getAttacks(int unitID) {
+    public String getAttacks(int unitID, String username) {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
@@ -137,7 +119,7 @@ public class GameController {
         return json;
     }
 
-    public String getPlacement(int baseID) {
+    public String getPlacement(int baseID, String username) {
         Position[] position = null;
 
         for (int i = 0; i < bases.size(); i++) {

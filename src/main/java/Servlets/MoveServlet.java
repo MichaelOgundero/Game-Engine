@@ -20,12 +20,13 @@ public class MoveServlet extends HttpServlet {
         String xCoord = req.getParameter("xCoord");
         String yCoord = req.getParameter("yCoord");
         String unitID = req.getParameter("unitID");
+        String username = req.getParameter("username");
 
         int xCoordAsInt = Integer.parseInt(xCoord);
         int yCoodAsInt = Integer.parseInt(yCoord);
         int unitIdAsInt = Integer.parseInt(unitID);
 
-        GameController.getInstance().move(xCoordAsInt, yCoodAsInt, unitIdAsInt);
+        GameController.getInstance().move(xCoordAsInt, yCoodAsInt, unitIdAsInt, username);
         String gameState = GameController.getInstance().getState();
 
         PrintWriter out = resp.getWriter();

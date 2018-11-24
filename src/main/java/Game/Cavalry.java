@@ -1,16 +1,26 @@
 package Game;
 
 public class Cavalry extends Unit {
+    private static transient int cavalryHealth = 10;
+    private static transient int cavalryStrength = 6;
+    private static transient int cavalryNumberOfMoves = 5;
 
     public Cavalry(int level, int xCoordinate, int yCoordinate) {
         this.level = level;
+        this.health = cavalryHealth;
+        this.attackStrength = cavalryStrength;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.type = UnitTypeEnum.CAVALRY;
-        this.numberOfMovesRemaining = GameController.getInstance().getCavalryNumberOfMoves();
+        this.numberOfMovesRemaining = cavalryNumberOfMoves;
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
 
         this.unitID = counter;
         counter++;
+    }
+
+    @Override
+    public void resetMoves() {
+        this.numberOfMovesRemaining = cavalryNumberOfMoves;
     }
 }

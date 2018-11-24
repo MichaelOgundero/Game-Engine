@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Base extends Thing {
     private transient ArrayList<Unit> units;
+    private static transient int baseHealth = 100;
     private int baseID;
     private String playerBelongsTo;
 
@@ -13,8 +14,9 @@ public class Base extends Thing {
 
     public Base(int xCoordinate, int yCoordinate, String playerBelongsTo) {
         this.level = 1;
-        units = new ArrayList<>();
+        this.health = 100;
         this.playerBelongsTo = playerBelongsTo;
+        units = new ArrayList<>();
 
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
@@ -111,18 +113,21 @@ public class Base extends Thing {
         if (type == UnitTypeEnum.CAVALRY) {
             Cavalry temp = new Cavalry(this.level, xCoordinate, yCoordinate);
             GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(temp);
+            this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }
         if (type == UnitTypeEnum.RANGED) {
             Ranged temp = new Ranged(this.level, xCoordinate, yCoordinate);
             GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(temp);
+            this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }
         if (type == UnitTypeEnum.MELEE) {
             Melee temp = new Melee(this.level, xCoordinate, yCoordinate);
             GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(temp);
+            this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }

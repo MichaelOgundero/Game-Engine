@@ -22,13 +22,14 @@ public class CreateUnitServlet extends HttpServlet {
         String yCoord = req.getParameter("yCoord");
         String type = req.getParameter("type");
         String baseID = req.getParameter("baseID");
+        String username = req.getParameter("username");
 
         int xCoordAsInt = Integer.parseInt(xCoord);
         int yCoodAsInt = Integer.parseInt(yCoord);
         int baseIdAsInt = Integer.parseInt(baseID);
         UnitTypeEnum typeAsEnum = UnitTypeEnum.valueOf(type);
 
-        GameController.getInstance().createUnit(xCoordAsInt, yCoodAsInt, typeAsEnum, baseIdAsInt);
+        GameController.getInstance().createUnit(xCoordAsInt, yCoodAsInt, typeAsEnum, baseIdAsInt, username);
         String gameState = GameController.getInstance().getState();
 
         PrintWriter out = resp.getWriter();

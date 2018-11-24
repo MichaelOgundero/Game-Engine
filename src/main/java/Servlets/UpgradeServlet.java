@@ -18,9 +18,10 @@ public class UpgradeServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String baseID = req.getParameter("baseID");
+        String username = req.getParameter("username");
         int baseIdAsInt = Integer.parseInt(baseID);
 
-        GameController.getInstance().upgrade(baseIdAsInt);
+        GameController.getInstance().upgrade(baseIdAsInt, username);
         String gameState = GameController.getInstance().getState();
 
         PrintWriter out = resp.getWriter();

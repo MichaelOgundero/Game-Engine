@@ -18,9 +18,10 @@ public class GetMovesServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String unitID = req.getParameter("unitID");
+        String username = req.getParameter("username");
         int unitIdAsInt = Integer.parseInt(unitID);
 
-        String positions = GameController.getInstance().getMoves(unitIdAsInt);
+        String positions = GameController.getInstance().getMoves(unitIdAsInt, username);
 
         PrintWriter out = resp.getWriter();
         out.print(positions);
