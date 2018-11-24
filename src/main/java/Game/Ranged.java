@@ -9,7 +9,7 @@ public class Ranged extends Unit {
     private static transient int rangedAttack = 6;
     private static transient int rangedNumberOfMoves = 2;
 
-    public Ranged(int level, int xCoordinate, int yCoordinate) {
+    public Ranged(int level, int xCoordinate, int yCoordinate, String username) {
         this.level = level;
         this.health = rangedHealth;
         this.health = rangedAttack;
@@ -21,6 +21,7 @@ public class Ranged extends Unit {
 
         this.unitID = counter;
         counter++;
+        this.playerBelongsTo = username;
     }
 
     @Override

@@ -5,7 +5,7 @@ public class Cavalry extends Unit {
     private static transient int cavalryStrength = 6;
     private static transient int cavalryNumberOfMoves = 5;
 
-    public Cavalry(int level, int xCoordinate, int yCoordinate) {
+    public Cavalry(int level, int xCoordinate, int yCoordinate, String username) {
         this.level = level;
         this.health = cavalryHealth;
         this.attackStrength = cavalryStrength;
@@ -17,6 +17,7 @@ public class Cavalry extends Unit {
 
         this.unitID = counter;
         counter++;
+        this.playerBelongsTo = username;
     }
 
     @Override

@@ -7,6 +7,7 @@ public class Unit extends Thing {
     protected int level;
     protected transient int attackStrength;
     protected int unitID;
+    protected String playerBelongsTo;
     protected UnitTypeEnum type;
     protected static transient int counter;
 
@@ -97,6 +98,10 @@ public class Unit extends Thing {
 
     public int getUnitID() {
         return unitID;
+    }
+
+    public String getPlayerBelongsTo() {
+        return playerBelongsTo;
     }
 
     public void increaseLevel() {

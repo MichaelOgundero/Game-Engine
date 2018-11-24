@@ -14,6 +14,10 @@ public class GameBoard {
         generateTiles(seed);
     }
 
+    public void initializeBases(String username, int xCoordinate, int yCoordinate){
+        Base temp = new Base(xCoordinate, yCoordinate, username);
+    }
+
     public static int getBoardWidth() {
         return BOARD_WIDTH;
     }

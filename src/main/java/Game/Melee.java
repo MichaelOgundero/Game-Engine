@@ -5,7 +5,7 @@ public class Melee extends Unit {
     private static transient int getMeleeAttack = 8;
     private static transient int meleeNumberOfMoves = 3;
 
-    public Melee(int level, int xCoordinate, int yCoordinate) {
+    public Melee(int level, int xCoordinate, int yCoordinate, String username) {
         this.level = level;
         this.health = meleeHealth;
         this.attackStrength = getMeleeAttack;
@@ -17,6 +17,7 @@ public class Melee extends Unit {
 
         this.unitID = counter;
         counter++;
+        this.playerBelongsTo = username;
     }
 
     @Override
