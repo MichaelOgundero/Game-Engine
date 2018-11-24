@@ -119,4 +119,9 @@ public class Ranged extends Unit {
     public void resetMoves() {
         this.numberOfMovesRemaining = rangedNumberOfMoves;
     }
+//
+//    @Override
+//    public String getPlayerBelongsTo() {
+//        return this.playerBelongsTo;
+//    }
 }

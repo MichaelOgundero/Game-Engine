@@ -24,4 +24,9 @@ public class Cavalry extends Unit {
     public void resetMoves() {
         this.numberOfMovesRemaining = cavalryNumberOfMoves;
     }
+
+//    @Override
+//    public String getPlayerBelongsTo() {
+//        return this.playerBelongsTo;
+//    }
 }

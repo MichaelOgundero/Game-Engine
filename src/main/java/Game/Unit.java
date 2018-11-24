@@ -101,7 +101,7 @@ public class Unit extends Thing {
     }
 
     public String getPlayerBelongsTo() {
-        return playerBelongsTo;
+        return this.playerBelongsTo;
     }
 
     public void increaseLevel() {

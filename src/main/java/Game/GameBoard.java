@@ -40,7 +40,7 @@ public class GameBoard {
             for (int i = 0; i < BOARD_HEIGHT; i++) {
                 for (int j = 0; j < BOARD_WIDTH; j++) {
                     if(generator.nextDouble() <= obstaclePercentage){
-                        gameTiles[j][i] = new Obstacle();
+                        gameTiles[j][i] = new Ground();
                     }else{
                         gameTiles[j][i] = new Ground();
                     }

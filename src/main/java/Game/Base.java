@@ -12,6 +12,7 @@ public class Base extends Thing {
     private String playerBelongsTo;
     private int level;
     private transient int levelCap = 5;
+    private int numberOfCreatableUnits = 1;
 
     public Base(int xCoordinate, int yCoordinate, String playerBelongsTo) {
         this.level = 1;
@@ -106,7 +107,7 @@ public class Base extends Thing {
             }
         }
 
-        return (Position[]) positions.toArray();
+        return positions.toArray(new Position[0]);
     }
 
     public int getBaseID() {
@@ -115,6 +116,10 @@ public class Base extends Thing {
 
     public String getPlayerBelongsTo() {
         return playerBelongsTo;
+    }
+
+    public void resetCreatableUnits(){
+        this.numberOfCreatableUnits = 1;
     }
 
     public void createUnit(int xCoordinate, int yCoordinate, UnitTypeEnum type, String username) {
@@ -139,5 +144,6 @@ public class Base extends Thing {
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }
+        numberOfCreatableUnits--;
     }
 }
