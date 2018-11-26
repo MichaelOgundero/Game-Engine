@@ -126,7 +126,7 @@ public class GameController {
 
         for (int i = 0; i < units.size(); i++) {
             if (units.get(i).getUnitID() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
-                position = units.get(i).getMoves(false);
+                position = units.get(i).getAttacks();
             }
         }
 
