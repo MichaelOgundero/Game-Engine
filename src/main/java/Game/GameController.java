@@ -85,7 +85,8 @@ public class GameController {
             if (currentPlayerPostion == numberOfPlayers - 1) {
                 currentPlayer = players.get(0);
             } else {
-                currentPlayer = players.get(currentPlayerPostion++);
+                currentPlayerPostion++;
+                currentPlayer = players.get(currentPlayerPostion);
             }
             for (int i = 0; i < units.size(); i++) {
                 units.get(i).resetMoves();

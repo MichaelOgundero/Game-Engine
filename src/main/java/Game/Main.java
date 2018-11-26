@@ -37,5 +37,8 @@ public class Main {
         //===============================================GET ATTACKS====================================================
 
         GameController.getInstance().getAttacks(3,"Bob");
+
+        GameController.getInstance().endTurn("Bob");
+        GameController.getInstance().getState();
     }
 }
