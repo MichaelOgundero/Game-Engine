@@ -6,9 +6,7 @@ import static Game.GameBoard.gameTiles;
 
 public class Base extends Thing {
     private static transient int baseHealth = 100;
-    private static transient int counter = 0;
-    private transient ArrayList<Unit> units;
-    private int baseID;
+    protected transient ArrayList<Unit> units;
     private String playerBelongsTo;
     private int level;
     private transient int levelCap = 5;
@@ -22,7 +20,7 @@ public class Base extends Thing {
 
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
-        this.baseID = counter;
+        this.id = counter;
         counter++;
 
         this.tile = gameTiles[xCoordinate][yCoordinate];
@@ -108,10 +106,6 @@ public class Base extends Thing {
         }
 
         return positions.toArray(new Position[0]);
-    }
-
-    public int getBaseID() {
-        return baseID;
     }
 
     public String getPlayerBelongsTo() {

@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class GameController {
-    private static GameController instance = null;
     public static ArrayList<String> players = new ArrayList();
     public static ArrayList<Base> bases = new ArrayList();
     public static ArrayList<Unit> units = new ArrayList();
+    private static GameController instance = null;
     private int numberOfPlayers;
     private String currentPlayer;
 
@@ -43,12 +43,39 @@ public class GameController {
         }
     }
 
+    public void checkIfGameOver(){
+        if(bases.size() == 1){
+
+        }
+    }
+
     public void forfeit(String username) {
-        players.remove(username);
-        numberOfPlayers--;
-        for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getPlayerBelongsTo().equals(username)) {
-                bases.remove(i);
+        if (username.equals(currentPlayer)) {
+            players.remove(username);
+            numberOfPlayers--;
+            for (int i = 0; i < bases.size(); i++) {
+                if (bases.get(i).getPlayerBelongsTo().equals(username)) {
+                    int xCoord = bases.get(i).xCoordinate;
+                    int yCoord = bases.get(i).yCoordinate;
+
+                    GameBoard.gameTiles[xCoord][yCoord].setThing(null);
+                    GameBoard.gameTiles[xCoord][yCoord].setHasThing(false);
+
+                    bases.remove(i);
+                }
+            }
+
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).getPlayerBelongsTo().equals(username)) {
+                    int xCoord = units.get(i).xCoordinate;
+                    int yCoord = units.get(i).yCoordinate;
+
+                    GameBoard.gameTiles[xCoord][yCoord].setThing(null);
+                    GameBoard.gameTiles[xCoord][yCoord].setHasThing(false);
+
+                    units.remove(units.get(i));
+                    i--;
+                }
             }
         }
     }
@@ -74,7 +101,7 @@ public class GameController {
 
     public void upgrade(int BaseID, String username) {
         for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getBaseID() == BaseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
+            if (bases.get(i).getId() == BaseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
                 bases.get(i).upgrade();
             }
         }
@@ -82,7 +109,7 @@ public class GameController {
 
     public void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID, String username) {
         for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getBaseID() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
+            if (bases.get(i).getId() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
                 bases.get(i).createUnit(xCoord, yCoord, type, username);
             }
         }
@@ -90,7 +117,7 @@ public class GameController {
 
     public void move(int xCoord, int yCoord, int unitID, String username) {
         for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getUnitID() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
                 units.get(i).move(xCoord, yCoord);
             }
         }
@@ -98,8 +125,9 @@ public class GameController {
 
     public void attack(int xCoord, int yCoord, int unitID, String username) {
         for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getUnitID() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
                 units.get(i).attack(xCoord, yCoord);
+                checkIfGameOver();
             }
         }
     }
@@ -108,7 +136,7 @@ public class GameController {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getUnitID() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
                 position = units.get(i).getMoves(true);
             }
         }
@@ -125,7 +153,7 @@ public class GameController {
         Position[] position = null;
 
         for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getUnitID() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
                 position = units.get(i).getAttacks();
             }
         }
@@ -142,7 +170,7 @@ public class GameController {
         Position[] position = null;
 
         for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getBaseID() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
+            if (bases.get(i).getId() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
                 position = bases.get(i).getPlacement();
             }
         }

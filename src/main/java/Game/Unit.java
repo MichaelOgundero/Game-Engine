@@ -3,11 +3,9 @@ package Game;
 import java.util.ArrayList;
 
 public class Unit extends Thing {
-    protected static transient int counter;
     protected int numberOfMovesRemaining;
     protected int level;
     protected transient int attackStrength;
-    protected int unitID;
     protected String playerBelongsTo;
     protected UnitTypeEnum type;
 
@@ -23,6 +21,27 @@ public class Unit extends Thing {
 
     public void attack(int xCoordinate, int yCoordinate) {
         GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().setHealth(GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getHealth() - attackStrength);
+
+        if (GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getHealth() <= 0) {
+            int id = GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getId();
+
+            //delete a base
+            for (int i = 0; i < GameController.getInstance().bases.size(); i++) {
+                if (GameController.getInstance().bases.get(i).getId() == id) {
+                    GameController.getInstance().forfeit(GameController.getInstance().bases.get(i).getPlayerBelongsTo());
+                }
+            }
+
+            //delete a unit
+            for (int i = 0; i < GameController.getInstance().units.size(); i++) {
+                if (GameController.getInstance().units.get(i).getId() == id) {
+                    GameController.getInstance().units.remove(i);
+
+                    GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(null);
+                    GameBoard.gameTiles[xCoordinate][yCoordinate].setHasThing(false);
+                }
+            }
+        }
     }
 
     public Position[] getAttacks() {
@@ -166,10 +185,6 @@ public class Unit extends Thing {
         }
 
         return positions.toArray(new Position[0]);
-    }
-
-    public int getUnitID() {
-        return unitID;
     }
 
     public String getPlayerBelongsTo() {

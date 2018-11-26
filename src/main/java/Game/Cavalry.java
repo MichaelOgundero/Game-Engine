@@ -15,7 +15,7 @@ public class Cavalry extends Unit {
         this.numberOfMovesRemaining = cavalryNumberOfMoves;
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
 
-        this.unitID = counter;
+        this.id = counter;
         counter++;
         this.playerBelongsTo = username;
     }

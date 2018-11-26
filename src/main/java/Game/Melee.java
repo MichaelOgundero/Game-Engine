@@ -15,7 +15,7 @@ public class Melee extends Unit {
         this.numberOfMovesRemaining = meleeNumberOfMoves;
         this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
 
-        this.unitID = counter;
+        this.id = counter;
         counter++;
         this.playerBelongsTo = username;
     }

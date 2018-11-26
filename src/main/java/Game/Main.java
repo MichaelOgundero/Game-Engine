@@ -25,17 +25,17 @@ public class Main {
         System.out.println("====================================GET MOVES===============================================");
         //==============================================GET MOVES=======================================================
 
-        GameController.getInstance().getMoves(0,"Bob");
+        GameController.getInstance().getMoves(3,"Bob");
 
         System.out.println("====================================MOVE===================================================");
         //===============================================MOVE===========================================================
 
-        GameController.getInstance().move(1,1,0, "Bob");
+        GameController.getInstance().move(1,1,3, "Bob");
         GameController.getInstance().getState();
 
         System.out.println("===============================GET ATTACKS==================================================");
         //===============================================GET ATTACKS====================================================
 
-        GameController.getInstance().getAttacks(0,"Bob");
+        GameController.getInstance().getAttacks(3,"Bob");
     }
 }
