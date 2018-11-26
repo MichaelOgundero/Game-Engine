@@ -43,42 +43,41 @@ public class GameController {
         }
     }
 
-    public void checkIfGameOver(){
-        if(bases.size() == 1){
+    public void checkIfGameOver() {
+        if (bases.size() == 1) {
 
         }
     }
 
     public void forfeit(String username) {
-        if (username.equals(currentPlayer)) {
-            players.remove(username);
-            numberOfPlayers--;
-            for (int i = 0; i < bases.size(); i++) {
-                if (bases.get(i).getPlayerBelongsTo().equals(username)) {
-                    int xCoord = bases.get(i).xCoordinate;
-                    int yCoord = bases.get(i).yCoordinate;
+        players.remove(username);
+        numberOfPlayers--;
+        for (int i = 0; i < bases.size(); i++) {
+            if (bases.get(i).getPlayerBelongsTo().equals(username)) {
+                int xCoord = bases.get(i).xCoordinate;
+                int yCoord = bases.get(i).yCoordinate;
 
-                    GameBoard.gameTiles[xCoord][yCoord].setThing(null);
-                    GameBoard.gameTiles[xCoord][yCoord].setHasThing(false);
+                GameBoard.gameTiles[xCoord][yCoord].setThing(null);
+                GameBoard.gameTiles[xCoord][yCoord].setHasThing(false);
 
-                    bases.remove(i);
-                }
+                bases.remove(i);
             }
+        }
 
-            for (int i = 0; i < units.size(); i++) {
-                if (units.get(i).getPlayerBelongsTo().equals(username)) {
-                    int xCoord = units.get(i).xCoordinate;
-                    int yCoord = units.get(i).yCoordinate;
+        for (int i = 0; i < units.size(); i++) {
+            if (units.get(i).getPlayerBelongsTo().equals(username)) {
+                int xCoord = units.get(i).xCoordinate;
+                int yCoord = units.get(i).yCoordinate;
 
-                    GameBoard.gameTiles[xCoord][yCoord].setThing(null);
-                    GameBoard.gameTiles[xCoord][yCoord].setHasThing(false);
+                GameBoard.gameTiles[xCoord][yCoord].setThing(null);
+                GameBoard.gameTiles[xCoord][yCoord].setHasThing(false);
 
-                    units.remove(units.get(i));
-                    i--;
-                }
+                units.remove(units.get(i));
+                i--;
             }
         }
     }
+
 
     public void endTurn(String username) {
         if (currentPlayer.equals(username)) {
