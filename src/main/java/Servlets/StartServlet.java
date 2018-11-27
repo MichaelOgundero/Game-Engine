@@ -23,7 +23,7 @@ public class StartServlet extends HttpServlet {
         int seedAsInt = Integer.parseInt(seed);
 
         GameController.getInstance().start(usernames, seedAsInt);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(usernames[0]);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

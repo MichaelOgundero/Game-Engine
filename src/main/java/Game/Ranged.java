@@ -17,7 +17,7 @@ public class Ranged extends Unit {
         this.yCoordinate = yCoordinate;
         this.type = UnitTypeEnum.RANGED;
         this.numberOfMovesRemaining = rangedNumberOfMoves;
-        this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
+        this.tile = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate];
 
         this.id = counter;
         counter++;
@@ -25,7 +25,7 @@ public class Ranged extends Unit {
     }
 
     @Override
-    public Position[] getAttacks() {
+    public Position[] getAttacks(String username) {
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
 
@@ -89,7 +89,7 @@ public class Ranged extends Unit {
             temp.xCoordinate = positions.get(i).getxCoordinate();
             temp.yCoordinate = positions.get(i).getyCoordinate();
 
-            Position[] tempPosition = temp.getMoves(false);
+            Position[] tempPosition = temp.getMoves(false, username);
             for (int j = 0; j < tempPosition.length; j++) {
                 positions.add(tempPosition[j]);
             }
@@ -99,7 +99,7 @@ public class Ranged extends Unit {
         for (int i = 0; i < positions.size(); i++) {
             int tileXCoordinate = positions.get(i).getxCoordinate();
             int tileYCoordinate = positions.get(i).getyCoordinate();
-            if (GameBoard.gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
+            if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
                 positions.remove(i);
                 i--;
             }

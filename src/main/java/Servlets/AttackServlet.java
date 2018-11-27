@@ -27,7 +27,7 @@ public class AttackServlet extends HttpServlet {
         int unitIdAsInt = Integer.parseInt(unitID);
 
         GameController.getInstance().attack(xCoordAsInt, yCoodAsInt, unitIdAsInt, username);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

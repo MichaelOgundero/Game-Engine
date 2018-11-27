@@ -2,8 +2,6 @@ package Game;
 
 import java.util.ArrayList;
 
-import static Game.GameBoard.gameTiles;
-
 public class Base extends Thing {
     private static transient int baseHealth = 100;
     protected transient ArrayList<Unit> units;
@@ -23,9 +21,9 @@ public class Base extends Thing {
         this.id = counter;
         counter++;
 
-        this.tile = gameTiles[xCoordinate][yCoordinate];
-        gameTiles[xCoordinate][yCoordinate].setThing(this);
-        gameTiles[xCoordinate][yCoordinate].type = TileTypeEnum.GROUND;
+        this.tile = GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[xCoordinate][yCoordinate];
+        GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[xCoordinate][yCoordinate].setThing(this);
+        GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[xCoordinate][yCoordinate].type = TileTypeEnum.GROUND;
         GameController.getInstance().bases.add(this);
     }
 
@@ -99,7 +97,7 @@ public class Base extends Thing {
         for (int i = 0; i < positions.size(); i++) {
             int tileXCoordinate = positions.get(i).getxCoordinate();
             int tileYCoordinate = positions.get(i).getyCoordinate();
-            if (gameTiles[tileXCoordinate][tileYCoordinate].hasThing == true) {
+            if (GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == true) {
                 positions.remove(i);
                 i--;
             }
@@ -119,22 +117,22 @@ public class Base extends Thing {
     public void createUnit(int xCoordinate, int yCoordinate, UnitTypeEnum type, String username) {
         if (type == UnitTypeEnum.CAVALRY) {
             Cavalry temp = new Cavalry(this.level, xCoordinate, yCoordinate, username);
-            gameTiles[xCoordinate][yCoordinate].setThing(temp);
-            this.tile = gameTiles[xCoordinate][yCoordinate];
+            GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].setThing(temp);
+            this.tile = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate];
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }
         if (type == UnitTypeEnum.RANGED) {
             Ranged temp = new Ranged(this.level, xCoordinate, yCoordinate, username);
-            gameTiles[xCoordinate][yCoordinate].setThing(temp);
-            this.tile = gameTiles[xCoordinate][yCoordinate];
+            GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].setThing(temp);
+            this.tile = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate];
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }
         if (type == UnitTypeEnum.MELEE) {
             Melee temp = new Melee(this.level, xCoordinate, yCoordinate, username);
-            gameTiles[xCoordinate][yCoordinate].setThing(temp);
-            this.tile = gameTiles[xCoordinate][yCoordinate];
+            GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].setThing(temp);
+            this.tile = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate];
             units.add(temp);
             GameController.getInstance().units.add(temp);
         }

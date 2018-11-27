@@ -19,7 +19,7 @@ public class ForfeitServlet extends HttpServlet{
         String username = req.getParameter("username");
 
         GameController.getInstance().forfeit(username);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

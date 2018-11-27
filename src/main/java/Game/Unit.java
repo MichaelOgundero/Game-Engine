@@ -9,21 +9,21 @@ public class Unit extends Thing {
     protected String playerBelongsTo;
     protected UnitTypeEnum type;
 
-    public void move(int xCoordinate, int yCoordinate) {
-        GameBoard.gameTiles[this.xCoordinate][this.yCoordinate].setThing(null);
-        GameBoard.gameTiles[this.xCoordinate][this.yCoordinate].setHasThing(false);
-        GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(this);
-        this.tile = GameBoard.gameTiles[xCoordinate][yCoordinate];
+    public void move(int xCoordinate, int yCoordinate, String username) {
+        GameBoard.gameBoardHolder.get(username).gameTiles[this.xCoordinate][this.yCoordinate].setThing(null);
+        GameBoard.gameBoardHolder.get(username).gameTiles[this.xCoordinate][this.yCoordinate].setHasThing(false);
+        GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].setThing(this);
+        this.tile = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate];
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         numberOfMovesRemaining--;
     }
 
-    public void attack(int xCoordinate, int yCoordinate) {
-        GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().setHealth(GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getHealth() - attackStrength);
+    public void attack(int xCoordinate, int yCoordinate, String username) {
+        GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].getThing().setHealth(GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].getThing().getHealth() - attackStrength);
 
-        if (GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getHealth() <= 0) {
-            int id = GameBoard.gameTiles[xCoordinate][yCoordinate].getThing().getId();
+        if (GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].getThing().getHealth() <= 0) {
+            int id = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].getThing().getId();
 
             //delete a base
             for (int i = 0; i < GameController.getInstance().bases.size(); i++) {
@@ -37,14 +37,14 @@ public class Unit extends Thing {
                 if (GameController.getInstance().units.get(i).getId() == id) {
                     GameController.getInstance().units.remove(i);
 
-                    GameBoard.gameTiles[xCoordinate][yCoordinate].setThing(null);
-                    GameBoard.gameTiles[xCoordinate][yCoordinate].setHasThing(false);
+                    GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].setThing(null);
+                    GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate].setHasThing(false);
                 }
             }
         }
     }
 
-    public Position[] getAttacks() {
+    public Position[] getAttacks(String username) {
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
 
@@ -106,7 +106,7 @@ public class Unit extends Thing {
         for (int i = 0; i < positions.size(); i++) {
             int tileXCoordinate = positions.get(i).getxCoordinate();
             int tileYCoordinate = positions.get(i).getyCoordinate();
-            if (GameBoard.gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
+            if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
                 positions.remove(i);
                 i--;
             }
@@ -115,7 +115,7 @@ public class Unit extends Thing {
         return positions.toArray(new Position[0]);
     }
 
-    public Position[] getMoves(boolean isForMove) {
+    public Position[] getMoves(boolean isForMove, String username) {
 
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
@@ -178,7 +178,7 @@ public class Unit extends Thing {
             for (int i = 0; i < positions.size(); i++) {
                 int tileXCoordinate = positions.get(i).getxCoordinate();
                 int tileYCoordinate = positions.get(i).getyCoordinate();
-                if (GameBoard.gameTiles[tileXCoordinate][tileYCoordinate].hasThing == true) {
+                if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == true) {
                     positions.remove(i);
                     i--;
                 }

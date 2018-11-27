@@ -20,7 +20,7 @@ public class EndTurnServlet extends HttpServlet{
         String username = req.getParameter("username");
 
         GameController.getInstance().endTurn(username);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

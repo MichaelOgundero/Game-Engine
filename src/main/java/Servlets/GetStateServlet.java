@@ -17,7 +17,9 @@ public class GetStateServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        String gameState = GameController.getInstance().getState();
+        String username = req.getParameter("username");
+
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

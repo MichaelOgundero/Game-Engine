@@ -30,7 +30,7 @@ public class CreateUnitServlet extends HttpServlet {
         UnitTypeEnum typeAsEnum = UnitTypeEnum.valueOf(type);
 
         GameController.getInstance().createUnit(xCoordAsInt, yCoodAsInt, typeAsEnum, baseIdAsInt, username);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

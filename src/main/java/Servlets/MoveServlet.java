@@ -27,7 +27,7 @@ public class MoveServlet extends HttpServlet {
         int unitIdAsInt = Integer.parseInt(unitID);
 
         GameController.getInstance().move(xCoordAsInt, yCoodAsInt, unitIdAsInt, username);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);

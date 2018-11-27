@@ -22,7 +22,7 @@ public class UpgradeServlet extends HttpServlet {
         int baseIdAsInt = Integer.parseInt(baseID);
 
         GameController.getInstance().upgrade(baseIdAsInt, username);
-        String gameState = GameController.getInstance().getState();
+        String gameState = GameController.getInstance().getState(username);
 
         PrintWriter out = resp.getWriter();
         out.print(gameState);
