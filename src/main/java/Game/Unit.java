@@ -102,6 +102,7 @@ public class Unit extends Thing {
             positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
         }
 
+        //remove all attackable position without units on them
         for (int i = 0; i < positions.size(); i++) {
             int tileXCoordinate = positions.get(i).getxCoordinate();
             int tileYCoordinate = positions.get(i).getyCoordinate();

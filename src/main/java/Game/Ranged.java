@@ -95,6 +95,16 @@ public class Ranged extends Unit {
             }
         }
 
+        //remove all attack-able position without units on them
+        for (int i = 0; i < positions.size(); i++) {
+            int tileXCoordinate = positions.get(i).getxCoordinate();
+            int tileYCoordinate = positions.get(i).getyCoordinate();
+            if (GameBoard.gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
+                positions.remove(i);
+                i--;
+            }
+        }
+
         return positions.toArray(new Position[0]);
     }
 

@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class GameController {
-    public static ArrayList<String> players = new ArrayList();
-    public static ArrayList<Base> bases = new ArrayList();
-    public static ArrayList<Unit> units = new ArrayList();
+    public ArrayList<String> players = new ArrayList();
+    public ArrayList<Base> bases = new ArrayList();
+    public ArrayList<Unit> units = new ArrayList();
     private static GameController instance = null;
     private int numberOfPlayers;
     private String currentPlayer;
@@ -45,7 +45,7 @@ public class GameController {
 
     public void checkIfGameOver() {
         if (bases.size() == 1) {
-
+            instance = null;
         }
     }
 
@@ -76,6 +76,8 @@ public class GameController {
                 i--;
             }
         }
+
+        checkIfGameOver();
     }
 
 

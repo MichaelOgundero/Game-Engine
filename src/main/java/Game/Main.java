@@ -38,7 +38,12 @@ public class Main {
 
         GameController.getInstance().getAttacks(3,"Bob");
 
-        GameController.getInstance().endTurn("Bob");
+        System.out.println("===============================END GAME AND RESET===========================================");
+        //===========================================END GAME AND RESETS================================================
+
+        GameController.getInstance().forfeit("Alice");
+        //GameController.getInstance().forfeit("Peter");
+
         GameController.getInstance().getState();
     }
 }
