@@ -1,5 +1,6 @@
 package Game;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class GameBoard {
@@ -9,6 +10,8 @@ public class GameBoard {
 
     public static Tile[][] gameTiles = new Tile[BOARD_WIDTH][BOARD_HEIGHT];
     public static TileTypeEnum[][] tilesTypes = new TileTypeEnum[BOARD_WIDTH][BOARD_HEIGHT];
+
+    //public static HashMap<String, Tile[][]> gameTile = new HashMap<>();
 
     public GameBoard(int seed) {
         generateTiles(seed);
