@@ -28,7 +28,35 @@ public class Unit extends Thing {
             //delete a base
             for (int i = 0; i < GameController.getInstance().bases.size(); i++) {
                 if (GameController.getInstance().bases.get(i).getId() == id) {
-                    GameController.getInstance().forfeit(GameController.getInstance().bases.get(i).getPlayerBelongsTo());
+
+                    String playerLost = GameController.getInstance().bases.get(i).getPlayerBelongsTo();
+
+                    GameBoard.gameBoardHolder.get(username).players.remove(playerLost);
+                    GameBoard.gameBoardHolder.get(username).numberOfPlayers--;
+
+                    int xCoord = GameController.getInstance().bases.get(i).xCoordinate;
+                    int yCoord = GameController.getInstance().bases.get(i).yCoordinate;
+
+                    GameBoard.gameBoardHolder.get(username).gameTiles[xCoord][yCoord].setThing(null);
+                    GameBoard.gameBoardHolder.get(username).gameTiles[xCoord][yCoord].setHasThing(false);
+
+                    GameController.getInstance().bases.remove(i);
+
+                    for (int j = 0; j < GameController.getInstance().units.size(); j++) {
+                        if (GameController.getInstance().units.get(j).getPlayerBelongsTo().equals(playerLost)) {
+
+                            xCoord = GameController.getInstance().units.get(j).xCoordinate;
+                            yCoord = GameController.getInstance().units.get(j).yCoordinate;
+
+                            GameBoard.gameBoardHolder.get(username).gameTiles[xCoord][yCoord].setThing(null);
+                            GameBoard.gameBoardHolder.get(username).gameTiles[xCoord][yCoord].setHasThing(false);
+
+                            GameController.getInstance().units.remove(GameController.getInstance().units.get(j));
+                            j--;
+                        }
+                    }
+
+                    GameController.getInstance().checkIfGameOver();
                 }
             }
 
