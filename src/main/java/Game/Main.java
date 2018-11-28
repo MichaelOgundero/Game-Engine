@@ -13,7 +13,6 @@ public class Main {
 //        int seed2 = 2000;
 
         GameController.getInstance().start(players, seed);
-        GameController.getInstance().getState(players[0]);
 
 //        GameController.getInstance().start(players2, seed2);
 //        GameController.getInstance().getState(players2[0]);
@@ -29,7 +28,6 @@ public class Main {
         //===============================================CREATE UNIT====================================================
 
         GameController.getInstance().createUnit(1,0,UnitTypeEnum.RANGED, 0, "Bob");
-        GameController.getInstance().getState(players[0]);
 
         System.out.println("============================GET MOVES=======================================================");
         //==============================================GET MOVES=======================================================
@@ -39,8 +37,7 @@ public class Main {
         System.out.println("=============================MOVE===========================================================");
         //===============================================MOVE===========================================================
 
-        GameController.getInstance().move(1,1,6, "Bob");
-        GameController.getInstance().getState(players[0]);
+        GameController.getInstance().move(1,1,3, "Bob");
 
         System.out.println("=============================GET ATTACKS====================================================");
         //===============================================GET ATTACKS====================================================
@@ -51,7 +48,6 @@ public class Main {
         //===========================================END TURN===========================================================
 
         GameController.getInstance().endTurn("Bob");
-        GameController.getInstance().getState(players[0]);
 
         System.out.println("=========================PLAYER 2 GET PLACEMENT=============================================");
         //===========================================PLAYER 2 GET PLACEMENT=============================================

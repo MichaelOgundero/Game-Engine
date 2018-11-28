@@ -23,6 +23,8 @@ public class GameController {
     public void start(String[] usernames, int seed) {
         games.add(new GameBoard(seed, usernames));
         games.get(games.size() - 1).initializeBases();
+
+        getState(GameBoard.gameBoardHolder.get(usernames[0]).currentPlayer);
     }
 
     public void checkIfGameOver() {
@@ -62,6 +64,7 @@ public class GameController {
 
             checkIfGameOver();
         }
+        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
 
 
@@ -81,124 +84,153 @@ public class GameController {
                 bases.get(i).resetCreatableUnits();
             }
         }
+        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
 
     //================API FUNCTIONS=====================================================================
 
     public void upgrade(int BaseID, String username) {
-        for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getId() == BaseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
-                bases.get(i).upgrade();
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            for (int i = 0; i < bases.size(); i++) {
+                if (bases.get(i).getId() == BaseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
+                    bases.get(i).upgrade();
+                }
             }
         }
+        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
 
     public void createUnit(int xCoord, int yCoord, UnitTypeEnum type, int baseID, String username) {
-        for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getId() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
-                bases.get(i).createUnit(xCoord, yCoord, type, username);
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            for (int i = 0; i < bases.size(); i++) {
+                if (bases.get(i).getId() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
+                    bases.get(i).createUnit(xCoord, yCoord, type, username);
+                }
             }
         }
+        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
 
     public void move(int xCoord, int yCoord, int unitID, String username) {
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
-                units.get(i).move(xCoord, yCoord, username);
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+                    units.get(i).move(xCoord, yCoord, username);
+                }
             }
         }
+        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
 
     public void attack(int xCoord, int yCoord, int unitID, String username) {
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
-                units.get(i).attack(xCoord, yCoord, username);
-                checkIfGameOver();
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+                    units.get(i).attack(xCoord, yCoord, username);
+                    checkIfGameOver();
+                }
             }
         }
+        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
 
     public String getMoves(int unitID, String username) {
-        Position[] position = null;
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            Position[] position = null;
 
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
-                position = units.get(i).getMoves(true, username);
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+                    position = units.get(i).getMoves(true, username);
+                }
             }
+
+            Positions positions = new Positions(position);
+            Gson gson = new Gson();
+            String json = gson.toJson(positions);
+
+            System.out.println(json);
+            return json;
+        } else {
+            return null;
         }
-
-        Positions positions = new Positions(position);
-        Gson gson = new Gson();
-        String json = gson.toJson(positions);
-
-        System.out.println(json);
-        return json;
     }
 
     public String getAttacks(int unitID, String username) {
-        Position[] position = null;
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            Position[] position = null;
 
-        for (int i = 0; i < units.size(); i++) {
-            if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
-                position = units.get(i).getAttacks(username);
+            for (int i = 0; i < units.size(); i++) {
+                if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
+                    position = units.get(i).getAttacks(username);
+                }
             }
+
+            Positions positions = new Positions(position);
+            Gson gson = new Gson();
+            String json = gson.toJson(positions);
+
+            System.out.println(json);
+            return json;
+        } else {
+            return null;
         }
-
-        Positions positions = new Positions(position);
-        Gson gson = new Gson();
-        String json = gson.toJson(positions);
-
-        System.out.println(json);
-        return json;
     }
 
     public String getPlacement(int baseID, String username) {
-        Position[] position = null;
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            Position[] position = null;
 
-        for (int i = 0; i < bases.size(); i++) {
-            if (bases.get(i).getId() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
-                position = bases.get(i).getPlacement();
+            for (int i = 0; i < bases.size(); i++) {
+                if (bases.get(i).getId() == baseID && bases.get(i).getPlayerBelongsTo().equals(username)) {
+                    position = bases.get(i).getPlacement();
+                }
             }
+
+            Positions positions = new Positions(position);
+            Gson gson = new Gson();
+            String json = gson.toJson(positions);
+
+            System.out.println(json);
+            return json;
+        } else {
+            return null;
         }
-
-        Positions positions = new Positions(position);
-        Gson gson = new Gson();
-        String json = gson.toJson(positions);
-
-        System.out.println(json);
-        return json;
     }
 
     public String getState(String username) {
-        ArrayList<Base> filteredBases = new ArrayList<>();
-        ArrayList<Unit> filteredUnits = new ArrayList<>();
-        ArrayList<String> tempPlayers = GameBoard.gameBoardHolder.get(username).players;
+        if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+            ArrayList<Base> filteredBases = new ArrayList<>();
+            ArrayList<Unit> filteredUnits = new ArrayList<>();
+            ArrayList<String> tempPlayers = GameBoard.gameBoardHolder.get(username).players;
 
-        for (int i = 0; i < bases.size(); i++) {
-            for (int j = 0; j < tempPlayers.size(); j++) {
-                if (bases.get(i).getPlayerBelongsTo().equals(tempPlayers.get(j))) {
-                    filteredBases.add(bases.get(i));
+            for (int i = 0; i < bases.size(); i++) {
+                for (int j = 0; j < tempPlayers.size(); j++) {
+                    if (bases.get(i).getPlayerBelongsTo().equals(tempPlayers.get(j))) {
+                        filteredBases.add(bases.get(i));
+                    }
                 }
             }
-        }
 
-        for (int i = 0; i < units.size(); i++) {
-            for (int j = 0; j < tempPlayers.size(); j++) {
-                if (units.get(i).getPlayerBelongsTo().equals(tempPlayers.get(j))) {
-                    filteredUnits.add(units.get(i));
+            for (int i = 0; i < units.size(); i++) {
+                for (int j = 0; j < tempPlayers.size(); j++) {
+                    if (units.get(i).getPlayerBelongsTo().equals(tempPlayers.get(j))) {
+                        filteredUnits.add(units.get(i));
+                    }
                 }
             }
+
+            GameState state = new GameState(GameBoard.gameBoardHolder.get(username).players.toArray(new String[0]), filteredBases.toArray(new Base[0]), filteredUnits.toArray(new Unit[0]), GameBoard.gameBoardHolder.get(username).getTileTypes());
+            state.setBoardHeight(GameBoard.getBoardHeight());
+            state.setBoardWidth(GameBoard.getBoardWidth());
+            state.setCurrentPlayer(GameBoard.gameBoardHolder.get(username).currentPlayer);
+
+            Gson gson = new Gson();
+            String json = gson.toJson(state);
+
+            System.out.println(json);
+            return json;
+        } else {
+            return null;
         }
-
-        GameState state = new GameState(GameBoard.gameBoardHolder.get(username).players.toArray(new String[0]), filteredBases.toArray(new Base[0]), filteredUnits.toArray(new Unit[0]), GameBoard.gameBoardHolder.get(username).getTileTypes());
-        state.setBoardHeight(GameBoard.getBoardHeight());
-        state.setBoardWidth(GameBoard.getBoardWidth());
-        state.setCurrentPlayer(GameBoard.gameBoardHolder.get(username).currentPlayer);
-
-        Gson gson = new Gson();
-        String json = gson.toJson(state);
-
-        System.out.println(json);
-        return json;
     }
 }
