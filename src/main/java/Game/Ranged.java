@@ -17,6 +17,8 @@ public class Ranged extends Unit {
         this.yCoordinate = yCoordinate;
         this.type = UnitTypeEnum.RANGED;
         this.numberOfMovesRemaining = rangedNumberOfMoves;
+        this.numberOfAttacksRemaining = 1;
+        this.attackStrength = rangedAttack;
         this.tile = GameBoard.gameBoardHolder.get(username).gameTiles[xCoordinate][yCoordinate];
 
         this.id = counter;
@@ -31,77 +33,79 @@ public class Ranged extends Unit {
 
         ArrayList<Position> positions = new ArrayList();
 
-        //UPPER LEFT
-        if (this.xCoordinate == 0 && this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //UPPER RIGHT
-        else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //LOWER LEFT
-        else if (this.xCoordinate == 0 && this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-        }
-        //LOWER RIGHT
-        else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-        //TOP SIDE
-        else if (this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //BOTTOM SIDE
-        else if (this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-        }
-        //LEFT SIDE
-        else if (this.xCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-        }
-        //RIGHT SIDE
-        else if (this.xCoordinate == boardWidth - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-        //OTHER
-        else {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-
-        int neighborSize = positions.size();
-        for (int i = 0; i < neighborSize; i++) {
-            Unit temp = new Unit();
-            temp.xCoordinate = positions.get(i).getxCoordinate();
-            temp.yCoordinate = positions.get(i).getyCoordinate();
-
-            Position[] tempPosition = temp.getMoves(false, username);
-            for (int j = 0; j < tempPosition.length; j++) {
-                positions.add(tempPosition[j]);
+        if (numberOfAttacksRemaining > 0) {
+            //UPPER LEFT
+            if (this.xCoordinate == 0 && this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
             }
-        }
+            //UPPER RIGHT
+            else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //LOWER LEFT
+            else if (this.xCoordinate == 0 && this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+            }
+            //LOWER RIGHT
+            else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+            //TOP SIDE
+            else if (this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //BOTTOM SIDE
+            else if (this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+            }
+            //LEFT SIDE
+            else if (this.xCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+            }
+            //RIGHT SIDE
+            else if (this.xCoordinate == boardWidth - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+            //OTHER
+            else {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
 
-        //remove all attack-able position without units on them
-        for (int i = 0; i < positions.size(); i++) {
-            int tileXCoordinate = positions.get(i).getxCoordinate();
-            int tileYCoordinate = positions.get(i).getyCoordinate();
-            if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
-                positions.remove(i);
-                i--;
+            int neighborSize = positions.size();
+            for (int i = 0; i < neighborSize; i++) {
+                Unit temp = new Unit();
+                temp.xCoordinate = positions.get(i).getxCoordinate();
+                temp.yCoordinate = positions.get(i).getyCoordinate();
+
+                Position[] tempPosition = temp.getMoves(false, username);
+                for (int j = 0; j < tempPosition.length; j++) {
+                    positions.add(tempPosition[j]);
+                }
+            }
+
+            //remove all attack-able position without units on them
+            for (int i = 0; i < positions.size(); i++) {
+                int tileXCoordinate = positions.get(i).getxCoordinate();
+                int tileYCoordinate = positions.get(i).getyCoordinate();
+                if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
+                    positions.remove(i);
+                    i--;
+                }
             }
         }
 

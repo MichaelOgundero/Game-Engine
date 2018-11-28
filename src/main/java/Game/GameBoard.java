@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class GameBoard {
-    private static final int BOARD_WIDTH = 15;
-    private static final int BOARD_HEIGHT = 15;
+    private static final int BOARD_WIDTH = 3;
+    private static final int BOARD_HEIGHT = 3;
     private static final double obstaclePercentage = 0.2;
     public static HashMap<String, GameBoard> gameBoardHolder = new HashMap<>();
 

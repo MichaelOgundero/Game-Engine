@@ -79,6 +79,7 @@ public class GameController {
             }
             for (int i = 0; i < units.size(); i++) {
                 units.get(i).resetMoves();
+                units.get(i).resetNumberOfAttacks();
             }
             for (int i = 0; i < bases.size(); i++) {
                 bases.get(i).resetCreatableUnits();

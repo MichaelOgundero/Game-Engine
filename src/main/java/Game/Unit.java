@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 public class Unit extends Thing {
     protected int numberOfMovesRemaining;
+    protected int numberOfAttacksRemaining;
     protected int level;
-    protected transient int attackStrength;
+    protected int attackStrength;
     protected String playerBelongsTo;
     protected UnitTypeEnum type;
 
@@ -55,7 +56,6 @@ public class Unit extends Thing {
                             j--;
                         }
                     }
-
                     GameController.getInstance().checkIfGameOver();
                 }
             }
@@ -70,77 +70,80 @@ public class Unit extends Thing {
                 }
             }
         }
+        numberOfAttacksRemaining--;
     }
 
     public Position[] getAttacks(String username) {
+
         int boardWidth = GameBoard.getBoardWidth();
         int boardHeight = GameBoard.getBoardHeight();
 
         ArrayList<Position> positions = new ArrayList();
+        if (numberOfAttacksRemaining > 0) {
+            //UPPER LEFT
+            if (this.xCoordinate == 0 && this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //UPPER RIGHT
+            else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //LOWER LEFT
+            else if (this.xCoordinate == 0 && this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+            }
+            //LOWER RIGHT
+            else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+            //TOP SIDE
+            else if (this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //BOTTOM SIDE
+            else if (this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+            }
+            //LEFT SIDE
+            else if (this.xCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+            }
+            //RIGHT SIDE
+            else if (this.xCoordinate == boardWidth - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+            //OTHER
+            else {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
 
-        //UPPER LEFT
-        if (this.xCoordinate == 0 && this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //UPPER RIGHT
-        else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //LOWER LEFT
-        else if (this.xCoordinate == 0 && this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-        }
-        //LOWER RIGHT
-        else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-        //TOP SIDE
-        else if (this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //BOTTOM SIDE
-        else if (this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-        }
-        //LEFT SIDE
-        else if (this.xCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-        }
-        //RIGHT SIDE
-        else if (this.xCoordinate == boardWidth - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-        //OTHER
-        else {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-
-        //remove all attackable position without units on them
-        for (int i = 0; i < positions.size(); i++) {
-            int tileXCoordinate = positions.get(i).getxCoordinate();
-            int tileYCoordinate = positions.get(i).getyCoordinate();
-            if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
-                positions.remove(i);
-                i--;
+            //remove all attackable position without units on them
+            for (int i = 0; i < positions.size(); i++) {
+                int tileXCoordinate = positions.get(i).getxCoordinate();
+                int tileYCoordinate = positions.get(i).getyCoordinate();
+                if (GameBoard.gameBoardHolder.get(username).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == false) {
+                    positions.remove(i);
+                    i--;
+                }
             }
         }
-
         return positions.toArray(new Position[0]);
+
     }
 
     public Position[] getMoves(boolean isForMove, String username) {
@@ -224,6 +227,9 @@ public class Unit extends Thing {
         this.level++;
     }
 
+    public void resetNumberOfAttacks(){
+        numberOfAttacksRemaining = 1;
+    }
     public void resetMoves() {
     }
 }
