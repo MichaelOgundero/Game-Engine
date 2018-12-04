@@ -58,14 +58,14 @@ public class GameBoard {
             //==========================================================================================================
         } else {
             Random generator = new Random(seed);
-            for (int i = 0; i < BOARD_HEIGHT; i++) {
-                for (int j = 0; j < BOARD_WIDTH; j++) {
+            for (int i = 0; i < BOARD_WIDTH; i++) {
+                for (int j = 0; j < BOARD_HEIGHT; j++) {
                     if (generator.nextDouble() <= obstaclePercentage) {
-                        gameTiles[j][i] = new Obstacle();
+                        gameTiles[i][j] = new Obstacle();
                     } else {
-                        gameTiles[j][i] = new Ground();
+                        gameTiles[i][j] = new Ground();
                     }
-                    tilesTypes[j][i] = gameTiles[j][i].type;
+                    tilesTypes[i][j] = gameTiles[i][j].type;
                 }
             }
         }

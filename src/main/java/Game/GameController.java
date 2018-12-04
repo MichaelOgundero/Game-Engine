@@ -27,14 +27,23 @@ public class GameController {
         getState(GameBoard.gameBoardHolder.get(usernames[0]).currentPlayer);
     }
 
-    public void checkIfGameOver() {
-        if (bases.size() == 1) {
-            instance = null;
+    public void checkIfGameOver(String username) {
+        if (GameBoard.gameBoardHolder.get(username).numberOfPlayers == 1) {
+
+            //================================Call Lobby================================================================
+            System.out.println("GAME OVER");
+            //==========================================================================================================
+
+            GameBoard.gameBoardHolder.remove(username);
         }
     }
 
     public void forfeit(String username) {
+
         if (GameBoard.gameBoardHolder.get(username).currentPlayer.equals(username)) {
+
+            endTurn(username);
+
             GameBoard.gameBoardHolder.get(username).players.remove(username);
             GameBoard.gameBoardHolder.get(username).numberOfPlayers--;
             for (int i = 0; i < bases.size(); i++) {
@@ -61,8 +70,7 @@ public class GameController {
                     i--;
                 }
             }
-
-            checkIfGameOver();
+            checkIfGameOver(GameBoard.gameBoardHolder.get(username).currentPlayer);
         }
         getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
@@ -78,11 +86,15 @@ public class GameController {
                 GameBoard.gameBoardHolder.get(username).currentPlayer = GameBoard.gameBoardHolder.get(username).players.get(currentPlayerPostion);
             }
             for (int i = 0; i < units.size(); i++) {
-                units.get(i).resetMoves();
-                units.get(i).resetNumberOfAttacks();
+                if(units.get(i).playerBelongsTo.equals(username)){
+                    units.get(i).resetMoves();
+                    units.get(i).resetNumberOfAttacks();
+                }
             }
             for (int i = 0; i < bases.size(); i++) {
-                bases.get(i).resetCreatableUnits();
+                if (bases.get(i).getPlayerBelongsTo().equals(username)){
+                    bases.get(i).resetCreatableUnits();
+                }
             }
         }
         getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
@@ -128,11 +140,16 @@ public class GameController {
             for (int i = 0; i < units.size(); i++) {
                 if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
                     units.get(i).attack(xCoord, yCoord, username);
-                    checkIfGameOver();
+                    checkIfGameOver(username);
                 }
             }
         }
-        getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
+        try {
+            getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
+        } catch (Exception e){
+            System.out.println("Cant't find the Game");
+        }
+
     }
 
     public String getMoves(int unitID, String username) {

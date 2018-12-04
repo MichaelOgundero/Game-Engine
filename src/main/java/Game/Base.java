@@ -9,6 +9,8 @@ public class Base extends Thing {
     private int level;
     private transient int levelCap = 5;
     private int numberOfCreatableUnits = 1;
+    protected int gold = 0;
+    private transient int upgradeprice = 100;
 
     public Base(int xCoordinate, int yCoordinate, String playerBelongsTo) {
         this.level = 1;
@@ -28,8 +30,9 @@ public class Base extends Thing {
     }
 
     public void upgrade() {
-        if (this.level < levelCap) {
+        if (this.level < levelCap && this.gold >= upgradeprice) {
             this.level++;
+            this.health += 20;
             for (int i = 0; i < units.size(); i++) {
                 units.get(i).increaseLevel();
             }
@@ -42,64 +45,67 @@ public class Base extends Thing {
 
         ArrayList<Position> positions = new ArrayList();
 
-        //UPPER LEFT
-        if (this.xCoordinate == 0 && this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //UPPER RIGHT
-        else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //LOWER LEFT
-        else if (this.xCoordinate == 0 && this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-        }
-        //LOWER RIGHT
-        else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-        //TOP SIDE
-        else if (this.yCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-        }
-        //BOTTOM SIDE
-        else if (this.yCoordinate == boardHeight - 1) {
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-        }
-        //LEFT SIDE
-        else if (this.xCoordinate == 0) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-        }
-        //RIGHT SIDE
-        else if (this.xCoordinate == boardWidth - 1) {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
-        //OTHER
-        else {
-            positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
-            positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
-            positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
-            positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
-        }
+        if (numberOfCreatableUnits > 0) {
 
-        for (int i = 0; i < positions.size(); i++) {
-            int tileXCoordinate = positions.get(i).getxCoordinate();
-            int tileYCoordinate = positions.get(i).getyCoordinate();
-            if (GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == true || GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[tileXCoordinate][tileYCoordinate].type == TileTypeEnum.OBSTACLE) {
-                positions.remove(i);
-                i--;
+            //UPPER LEFT
+            if (this.xCoordinate == 0 && this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //UPPER RIGHT
+            else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //LOWER LEFT
+            else if (this.xCoordinate == 0 && this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+            }
+            //LOWER RIGHT
+            else if (this.xCoordinate == boardWidth - 1 && this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+            //TOP SIDE
+            else if (this.yCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+            }
+            //BOTTOM SIDE
+            else if (this.yCoordinate == boardHeight - 1) {
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+            }
+            //LEFT SIDE
+            else if (this.xCoordinate == 0) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+            }
+            //RIGHT SIDE
+            else if (this.xCoordinate == boardWidth - 1) {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+            //OTHER
+            else {
+                positions.add(new Position(this.xCoordinate, this.yCoordinate - 1));
+                positions.add(new Position(this.xCoordinate, this.yCoordinate + 1));
+                positions.add(new Position(this.xCoordinate + 1, this.yCoordinate));
+                positions.add(new Position(this.xCoordinate - 1, this.yCoordinate));
+            }
+
+            for (int i = 0; i < positions.size(); i++) {
+                int tileXCoordinate = positions.get(i).getxCoordinate();
+                int tileYCoordinate = positions.get(i).getyCoordinate();
+                if (GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[tileXCoordinate][tileYCoordinate].hasThing == true || GameBoard.gameBoardHolder.get(playerBelongsTo).gameTiles[tileXCoordinate][tileYCoordinate].type == TileTypeEnum.OBSTACLE) {
+                    positions.remove(i);
+                    i--;
+                }
             }
         }
 
@@ -110,7 +116,7 @@ public class Base extends Thing {
         return playerBelongsTo;
     }
 
-    public void resetCreatableUnits(){
+    public void resetCreatableUnits() {
         this.numberOfCreatableUnits = 1;
     }
 
