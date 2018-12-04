@@ -2,6 +2,12 @@ package Game;
 
 import com.google.gson.Gson;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class GameController {
@@ -27,14 +33,30 @@ public class GameController {
         getState(GameBoard.gameBoardHolder.get(usernames[0]).currentPlayer);
     }
 
-    public void checkIfGameOver(String username) {
+    public void checkIfGameOver(String username) throws IOException {
         if (GameBoard.gameBoardHolder.get(username).numberOfPlayers == 1) {
 
             //================================Call Lobby================================================================
-            System.out.println("GAME OVER");
+            String FinishURL = "https://lobbyservice-dot-training-project-lab.appspot.com/FinishGame";
+
+            URL obj = new URL(FinishURL);
+            HttpURLConnection httpCon = (HttpURLConnection) obj.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setRequestProperty("Content-Type", "json");
+            httpCon.setRequestMethod("DELETE");
+
+            OutputStream os = httpCon.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(username);
+            writer.flush();
+            writer.close();
+            os.close();
+            httpCon.connect();
             //==========================================================================================================
 
-            GameBoard.gameBoardHolder.remove(username);
+            forfeit(username);
+            GameBoard.gameBoardHolder.get(username).currentPlayer = null;
         }
     }
 
@@ -70,7 +92,11 @@ public class GameController {
                     i--;
                 }
             }
-            checkIfGameOver(GameBoard.gameBoardHolder.get(username).currentPlayer);
+            try {
+                checkIfGameOver(GameBoard.gameBoardHolder.get(username).currentPlayer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
     }
@@ -86,13 +112,13 @@ public class GameController {
                 GameBoard.gameBoardHolder.get(username).currentPlayer = GameBoard.gameBoardHolder.get(username).players.get(currentPlayerPostion);
             }
             for (int i = 0; i < units.size(); i++) {
-                if(units.get(i).playerBelongsTo.equals(username)){
+                if (units.get(i).playerBelongsTo.equals(username)) {
                     units.get(i).resetMoves();
                     units.get(i).resetNumberOfAttacks();
                 }
             }
             for (int i = 0; i < bases.size(); i++) {
-                if (bases.get(i).getPlayerBelongsTo().equals(username)){
+                if (bases.get(i).getPlayerBelongsTo().equals(username)) {
                     bases.get(i).resetCreatableUnits();
                 }
             }
@@ -140,13 +166,17 @@ public class GameController {
             for (int i = 0; i < units.size(); i++) {
                 if (units.get(i).getId() == unitID && units.get(i).getPlayerBelongsTo().equals(username)) {
                     units.get(i).attack(xCoord, yCoord, username);
-                    checkIfGameOver(username);
+                    try {
+                        checkIfGameOver(username);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
         try {
             getState(GameBoard.gameBoardHolder.get(username).currentPlayer);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Cant't find the Game");
         }
 
