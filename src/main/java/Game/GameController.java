@@ -37,22 +37,15 @@ public class GameController {
         if (GameBoard.gameBoardHolder.get(username).numberOfPlayers == 1) {
 
             //================================Call Lobby================================================================
-            String FinishURL = "https://lobbyservice-dot-training-project-lab.appspot.com/FinishGame";
+            String FinishURL = "https://lobbyservice-dot-training-project-lab.appspot.com/FinishGame?username=";
 
-            URL obj = new URL(FinishURL);
+            URL obj = new URL(FinishURL + username);
             HttpURLConnection httpCon = (HttpURLConnection) obj.openConnection();
             httpCon.setDoOutput(true);
             httpCon.setRequestProperty("Content-Type", "json");
             httpCon.setRequestMethod("DELETE");
 
-            OutputStream os = httpCon.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(username);
-            writer.flush();
-            writer.close();
-            os.close();
-            httpCon.connect();
+            System.out.println("Response code: " + httpCon.getResponseCode());
             //==========================================================================================================
 
             forfeit(username);
